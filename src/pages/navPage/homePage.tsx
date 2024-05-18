@@ -14,7 +14,7 @@ export function HomePage() {
 
     const isAuthenticated = sessionStorage.getItem("isAuthenticated")
 
-    const [showedComponent, setShowedComponent] = useState<number>(0)
+    const [showedComponent, setShowedComponent] = useState<number>(1)
 
     useEffect(() => {
         document.title = "Home"

@@ -28,54 +28,60 @@
     padding: 0;
 }
 
-.grid {
+.dark {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
 
-    .dataLight {
-        margin: 0.7rem;
-        flex-direction: column;
-        width: 17rem;
-        padding: 0.5rem;
-        background-color: rgb(240, 240, 240);
+    color: #fff;
+    width: 100%;
+    height: 300vh;
+
+    background-color: #242424;
+
+    .navMenu {
+        margin-top: 1rem;
         display: flex;
-        color: #000;
-        border-radius: 0.5rem;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+        justify-content: space-between;
+        align-items: center;
+        width: 15rem;
 
-        .activeSection {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .navButton {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            background-color: #00000000;
 
-            .buttonActive {
-                padding: 0.2rem;
-                border: none;
-                background-color: #4cd964;
-                color: #000;
-                border-radius: 0.3rem;
-                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
-
-                &:hover {
-                    cursor: pointer;
-                }
+            &:hover {
+                cursor: pointer;
+                transform: scale(110%);
             }
 
-            .buttonInactive {
-                color: #fff;
-                padding: 0.2rem;
-                border: none;
-                background-color: crimson;
-                border-radius: 0.3rem;
-                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
-
-                &:hover {
-                    cursor: pointer;
-                }
+            &:focus {
+                transform: scale(110%);
+                text-decoration: underline;
             }
         }
+    }
+
+    .addButton{
+        position: fixed;
+        top: 34rem;
+        left: 18rem;
+        font-size: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: regular;
+        border: none;
+        color: #fff;
+        border-radius: 50%;
+        background-color: 	#7598c1;
+        width: 4rem;
+        height: 4rem;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
     }
 
     .dataDark {
@@ -117,6 +123,96 @@
 
                 &:hover {
                     cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+.light {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    color: #000;
+    width: 100%;
+    height: 300vh;
+
+    background-color: #fff;
+
+    .navMenu {
+        margin-top: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 15rem;
+
+        .navButton {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #000;
+            border: none;
+            background-color: #00000000;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(110%);
+            }
+
+            &:focus {
+                transform: scale(110%);
+                text-decoration: underline;
+            }
+        }
+    }
+
+    .grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .dataLight {
+            margin: 0.7rem;
+            flex-direction: column;
+            width: 17rem;
+            padding: 0.5rem;
+            background-color: rgb(240, 240, 240);
+            display: flex;
+            color: #000;
+            border-radius: 0.5rem;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+            .activeSection {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .buttonActive {
+                    padding: 0.2rem;
+                    border: none;
+                    background-color: #4cd964;
+                    color: #000;
+                    border-radius: 0.3rem;
+                    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .buttonInactive {
+                    color: #fff;
+                    padding: 0.2rem;
+                    border: none;
+                    background-color: crimson;
+                    border-radius: 0.3rem;
+                    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+
+                    &:hover {
+                        cursor: pointer;
+                    }
                 }
             }
         }

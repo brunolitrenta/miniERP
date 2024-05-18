@@ -1,0 +1,150 @@
+.poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+* {
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+}
+
+.dark {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    color: #fff;
+    width: 100%;
+    height: 200vh;
+
+    background-color: #242424;
+
+    .dataDark {
+        margin: 0.7rem;
+        flex-direction: column;
+        width: 19rem;
+        padding: 0.5rem;
+        background-color: #2e2e2e;
+        display: flex;
+        color: #fff;
+        border-radius: 0.5rem;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+        .activeSection {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .buttonActive {
+                padding: 0.2rem;
+                border: none;
+                background-color: #4cd964;
+                color: #fff;
+                border-radius: 0.3rem;
+                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .buttonInactive {
+                color: #fff;
+                padding: 0.2rem;
+                border: none;
+                background-color: crimson;
+                border-radius: 0.3rem;
+                box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
+
+.light {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    color: #000;
+    width: 100%;
+    height: 200vh;
+
+    background-color: #fff;
+
+    .grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .dataLight {
+            margin: 0.7rem;
+            flex-direction: column;
+            width: 19rem;
+            padding: 0.5rem;
+            background-color: rgb(240, 240, 240);
+            display: flex;
+            color: #000;
+            border-radius: 0.5rem;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+            .activeSection {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+
+                .buttonActive {
+                    padding: 0.2rem;
+                    border: none;
+                    background-color: #4cd964;
+                    color: #000;
+                    border-radius: 0.3rem;
+                    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+
+                .buttonInactive {
+                    color: #fff;
+                    padding: 0.2rem;
+                    border: none;
+                    background-color: crimson;
+                    border-radius: 0.3rem;
+                    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.13);
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
