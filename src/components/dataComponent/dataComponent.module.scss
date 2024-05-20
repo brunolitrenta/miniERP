@@ -66,19 +66,18 @@
         }
     }
 
-    .addButton{
+    .addButton {
         position: fixed;
-        top: 34rem;
-        left: 18rem;
+        top: 83%;
+        left: 78%;
         font-size: 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
-        font-weight: regular;
         border: none;
         color: #fff;
         border-radius: 50%;
-        background-color: 	#7598c1;
+        background-color: #7598c1;
         width: 4rem;
         height: 4rem;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
@@ -165,6 +164,23 @@
                 text-decoration: underline;
             }
         }
+    }
+
+    .addButton {
+        position: fixed;
+        top: 83%;
+        left: 78%;
+        font-size: 4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        color: #fff;
+        border-radius: 50%;
+        background-color: #7598c1;
+        width: 4rem;
+        height: 4rem;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
     }
 
     .grid {

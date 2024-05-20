@@ -1,0 +1,256 @@
+.poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+* {
+    font-family: "Poppins";
+    margin: 0;
+    padding: 0;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+
+    .addSectionDark {
+        position: absolute;
+        top: 20%;
+        background-color: #2e2e2e;
+        color: #fff;
+        padding: 1rem;
+        border-radius: 0.5rem;
+
+        width: 16rem;
+
+        display: flex;
+        flex-direction: column;
+
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+
+        .topTab {
+            display: flex;
+            justify-content: space-between;
+
+            .setField {
+                display: flex;
+
+                .label {
+                    font-weight: bold;
+                }
+
+                .data {
+                    margin-left: 0.3rem;
+                }
+            }
+
+            .closeButton {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: crimson;
+                border: none;
+                padding: 0.8rem;
+                border-radius: 0.3rem;
+                width: 1.5rem;
+                height: 1.5rem;
+
+                img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+
+        .formField {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                font-weight: bold;
+            }
+
+            .label {
+                font-weight: bold;
+            }
+
+            input {
+                background-color: #242424;
+                color: #fff;
+
+                height: 1.3rem;
+                padding: 0.3rem;
+                border: 1px solid gray;
+                border-radius: 0.2rem;
+            }
+
+            .radioSection {
+
+                label {
+                    font-weight: normal;
+                }
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.9rem;
+                justify-content: space-between;
+            }
+        }
+
+        .setField {
+            display: flex;
+
+            .label {
+                font-weight: bold;
+            }
+
+            .data {
+                margin-left: 0.3rem;
+            }
+        }
+
+
+        .addButton {
+            border: none;
+            background-color: rgb(95, 255, 0);
+            margin: auto;
+            margin-top: 0.5rem;
+            width: 5rem;
+            height: 2rem;
+            border-radius: 0.3rem;
+        }
+    }
+}
+
+.addSectionLight {
+    position: absolute;
+    top: 20%;
+    background-color: rgb(240, 240, 240);
+    color: #000;
+    padding: 1rem;
+    border-radius: 0.5rem;
+
+    width: 16rem;
+
+    display: flex;
+    flex-direction: column;
+
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+
+    .topTab {
+        display: flex;
+        justify-content: space-between;
+
+        .setField {
+            display: flex;
+
+            .label {
+                font-weight: bold;
+            }
+
+            .data {
+                margin-left: 0.3rem;
+            }
+        }
+
+        .closeButton {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: crimson;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 0.3rem;
+            width: 1.5rem;
+            height: 1.5rem;
+
+            img {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+    }
+
+    .formField {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            font-weight: bold;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        input {
+            height: 1.3rem;
+            padding: 0.3rem;
+            border: 1px solid gray;
+            border-radius: 0.2rem;
+        }
+
+        .radioSection {
+
+            label {
+                font-weight: normal;
+            }
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.9rem;
+            justify-content: space-between;
+        }
+    }
+
+    .setField {
+        display: flex;
+
+        .label {
+            font-weight: bold;
+        }
+
+        .data {
+            margin-left: 0.3rem;
+        }
+    }
+
+
+    .addButton {
+        border: none;
+        background-color: rgb(95, 255, 0);
+        margin: auto;
+        margin-top: 0.5rem;
+        width: 5rem;
+        height: 2rem;
+        border-radius: 0.3rem;
+    }
+}

@@ -98,8 +98,7 @@ export function LoginPage() {
         const correctUser = users.find(users => users.email == inputRef.current!.value || users.name == inputRef.current!.value)
         if (correctUser && correctUser.password == passwordRef.current!.value && correctUser.active) {
             sessionStorage.setItem("isAuthenticated", "true")
-            sessionStorage.setItem("accessLevel", correctUser.accessLevel)
-            sessionStorage.setItem("currentUsername", correctUser.name)
+            sessionStorage.setItem("loggedUser", JSON.stringify(correctUser))
             navigate("/home")
         }
         else {

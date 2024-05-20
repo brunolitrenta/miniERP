@@ -2,25 +2,30 @@ import { useEffect, useState } from "react"
 import { IUser } from "../../Interfaces/IUser"
 import styles from "./dataComponent.module.scss"
 import { ICompany } from "../../Interfaces/ICompany"
+import { Modal } from "../modalComponent/modalComponent"
 
 export function Data() {
 
     const savedTheme = localStorage.getItem("theme")
 
-    const accessLevel = sessionStorage.getItem("accessLevel")
+    const currentUser: IUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
 
     const [users, setUsers] = useState<Array<IUser>>(JSON.parse(localStorage.getItem("users") || "[]"))
 
-    const [companies, setCompanies] = useState<Array<ICompany>>(JSON.parse(localStorage.getItem("companies") || "[]"))
+    const [filterUsers, setFilterUsers] = useState<Array<IUser>>([])
+
+    const companies: Array<ICompany> = (JSON.parse(localStorage.getItem("companies") || "[]"))
+
+    const [filterCompanies, setFilterCompanies] = useState<Array<ICompany>>([])
 
     const [showedComponent, setShowedComponent] = useState<number>(1)
 
-
+    const [isOpen, setIsOpen] = useState<boolean>(false)
 
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))
+        filterData()
     }, [users])
-
 
     function activateUser(user: IUser) {
         setUsers((prevState) => {
@@ -30,29 +35,30 @@ export function Data() {
         })
     }
 
-    function activateCompany(company: ICompany) {
-        setCompanies((prevState) => {
-            const newArr = prevState.filter((ps) => ps.id != company.id)
-            const _company = { ...company, active: !company.active }
-            return [...newArr, _company
-            ]
+    function filterData() {
+        setFilterUsers(() => {
+            const newArr = users.filter((ps) => ps.companyId == currentUser.companyId)
+            return [...newArr]
+        })
+
+        setFilterCompanies(() => {
+            const newArr = companies.filter((ps) => ps.id == currentUser.companyId)
+            return [...newArr]
         })
     }
-
 
     return (
         <div className={savedTheme == "light" ? styles.light : styles.dark}>
             <nav className={styles.navMenu}>
                 <button className={styles.navButton} onClick={() => setShowedComponent(1)}>Users</button>
-                <button className={styles.navButton} onClick={() => setShowedComponent(2)}>Companies</button>
+                <button className={styles.navButton} onClick={() => setShowedComponent(2)}>Company</button>
             </nav>
-            <button className={styles.addButton}>+</button>
             {
                 {
                     1: <div className={styles.grid}>
                         {
-                            accessLevel == "admin"
-                                ? users.sort(function sortArray(a: IUser, b: IUser) {
+                            currentUser.accessLevel == "admin"
+                                ? filterUsers.sort(function sortArray(a: IUser, b: IUser) {
                                     if (a.id < b.id) {
                                         return -1
                                     }
@@ -73,10 +79,11 @@ export function Data() {
                                                 <p>Active: {user.active ? "true" : "false"}</p>
                                                 <button className={!user.active ? styles.buttonActive : styles.buttonInactive} onClick={() => activateUser(user)}>{user.active ? "Deactivate" : "Activate"}</button>
                                             </div>
+
                                         </div>
                                     )
                                 })
-                                : users.sort().map((user: IUser) => {
+                                : filterUsers.map((user: IUser) => {
                                     return (
                                         <div key={user.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
                                             <p>Id: {user.id}</p>
@@ -90,11 +97,13 @@ export function Data() {
                                     )
                                 })
                         }
+                        <button className={styles.addButton} onClick={() => setIsOpen(true)}>+</button>
+                        <Modal isOpen={isOpen} close={() => setIsOpen(!isOpen)} />
                     </div>,
                     2: <div className={styles.grid}>
                         {
-                            accessLevel == "admin"
-                                ? companies.sort(function sortArray(a: ICompany, b: ICompany) {
+                            currentUser.accessLevel == "admin"
+                                ? filterCompanies.sort(function sortArray(a: ICompany, b: ICompany) {
                                     if (a.id < b.id) {
                                         return -1
                                     }
@@ -108,16 +117,11 @@ export function Data() {
                                             <p>Id: {company.id}</p>
                                             <p>Company name: {company.companyName}</p>
                                             <p>CNPJ: {company.CNPJ}</p>
-                                            <div className={styles.activeSection}>
-                                                <p>Active: {company.active ? "true" : "false"}</p>
-                                                <button className={!company.active ? styles.buttonActive : styles.buttonInactive} onClick={() => activateCompany(company)}>
-                                                    {company.active ? "Deactivate" : "Activate"}
-                                                </button>
-                                            </div>
+                                            <p>Active: {company.active ? "true" : "false"}</p>
                                         </div>
                                     )
                                 })
-                                : companies.sort().map((company: ICompany) => {
+                                : filterCompanies.map((company: ICompany) => {
                                     return (
                                         <div key={company.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
                                             <p>Id: {company.id}</p>
@@ -128,6 +132,7 @@ export function Data() {
                                     )
                                 })
                         }
+                        <button className={styles.addButton}>+</button>
                     </div>
                 }[showedComponent]
             }
