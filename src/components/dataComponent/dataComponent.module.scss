@@ -36,7 +36,8 @@
 
     color: #fff;
     width: 100%;
-    height: 300vh;
+    height: 100%;
+    min-height: 100vh;
 
     background-color: #242424;
 
@@ -70,29 +71,50 @@
         position: fixed;
         top: 83%;
         left: 78%;
-        font-size: 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
         border: none;
-        color: #fff;
         border-radius: 50%;
         background-color: #7598c1;
         width: 4rem;
         height: 4rem;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+        img {
+            width: 3rem;
+            height: 3rem;
+        }
     }
 
     .dataDark {
         margin: 0.7rem;
         flex-direction: column;
-        width: 17rem;
+        width: 19rem;
         padding: 0.5rem;
         background-color: #2e2e2e;
         display: flex;
         color: #fff;
         border-radius: 0.5rem;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+        .cardTop {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            button {
+                width: 1.75rem;
+                height: 1.75rem;
+                border: none;
+                background-color: #00000000;
+
+                img {
+                    width: 1.75rem;
+                    height: 1.75rem;
+                }
+            }
+        }
 
         .activeSection {
             display: flex;
@@ -126,6 +148,147 @@
             }
         }
     }
+
+    .addSectionDark {
+        position: fixed;
+        top: 10%;
+        background-color: #2e2e2e;
+        color: #fff;
+        padding: 1.75rem;
+        border-radius: 0.5rem;
+        z-index: 999;
+
+        width: 80%;
+        height: 60%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1.3rem;
+
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+
+        .topTab {
+            display: flex;
+            justify-content: space-between;
+
+            .setField {
+                display: flex;
+
+                .label {
+                    font-weight: bold;
+                }
+
+                .data {
+                    margin-left: 0.3rem;
+                }
+            }
+
+            .closeButton {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: #dc143c;
+                border: none;
+                padding: 0.8rem;
+                border-radius: 0.3rem;
+                width: 1.5rem;
+                height: 1.5rem;
+
+                img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+
+        .formField {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                font-weight: bold;
+            }
+
+            .label {
+                font-weight: bold;
+            }
+
+            input {
+                background-color: #242424;
+                color: white;
+                height: 2rem;
+                padding: 0.3rem;
+                border: 1px solid gray;
+                border-radius: 0.2rem;
+            }
+
+            .radioSection {
+
+                .radioInputs {
+                    display: flex;
+                    flex-direction: column;
+
+                    label {
+                        font-weight: normal;
+                    }
+                }
+
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.9rem;
+                justify-content: space-between;
+            }
+        }
+
+        .setField {
+            display: flex;
+
+            .label {
+                font-weight: bold;
+            }
+
+            .data {
+                margin-left: 0.3rem;
+            }
+        }
+
+        .editButtons {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            .removeButton {
+                width: 2rem;
+                height: 2rem;
+                border: none;
+                background-color: #00000000;
+
+                img {
+                    height: 1.75rem;
+                    width: 1.75rem;
+                }
+            }
+
+            .saveUserButton {
+                border: none;
+                background-color: rgb(95, 255, 0);
+                width: 5rem;
+                height: 3rem;
+                border-radius: 0.3rem;
+            }
+        }
+
+        .addUserButton {
+            border: none;
+            background-color: rgb(95, 255, 0);
+            margin: auto;
+            width: 5rem;
+            height: 3rem;
+            border-radius: 0.3rem;
+        }
+    }
 }
 
 .light {
@@ -136,7 +299,8 @@
 
     color: #000;
     width: 100%;
-    height: 300vh;
+    height: 100%;
+    min-height: 100vh;
 
     background-color: #fff;
 
@@ -170,17 +334,20 @@
         position: fixed;
         top: 83%;
         left: 78%;
-        font-size: 4rem;
         display: flex;
         justify-content: center;
         align-items: center;
         border: none;
-        color: #fff;
         border-radius: 50%;
         background-color: #7598c1;
         width: 4rem;
         height: 4rem;
         box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+        img {
+            width: 3rem;
+            height: 3rem;
+        }
     }
 
     .grid {
@@ -192,13 +359,31 @@
         .dataLight {
             margin: 0.7rem;
             flex-direction: column;
-            width: 17rem;
+            width: 19rem;
             padding: 0.5rem;
             background-color: rgb(240, 240, 240);
             display: flex;
             color: #000;
             border-radius: 0.5rem;
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.24);
+
+            .cardTop {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+
+                button {
+                    width: 1.75rem;
+                    height: 1.75rem;
+                    border: none;
+                    background-color: #00000000;
+
+                    img {
+                        width: 1.75rem;
+                        height: 1.75rem;
+                    }
+                }
+            }
 
             .activeSection {
                 display: flex;
@@ -231,6 +416,145 @@
                     }
                 }
             }
+        }
+    }
+
+    .addSectionLight {
+        position: fixed;
+        top: 10%;
+        background-color: rgb(240, 240, 240);
+        color: #000;
+        padding: 1.75rem;
+        border-radius: 0.5rem;
+        z-index: 999;
+
+        width: 80%;
+        height: 60%;
+
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.26);
+
+        .topTab {
+            display: flex;
+            justify-content: space-between;
+
+            .setField {
+                display: flex;
+
+                .label {
+                    font-weight: bold;
+                }
+
+                .data {
+                    margin-left: 0.3rem;
+                }
+            }
+
+            .closeButton {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: crimson;
+                border: none;
+                padding: 0.8rem;
+                border-radius: 0.3rem;
+                width: 1.5rem;
+                height: 1.5rem;
+
+                img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+            }
+        }
+
+        .formField {
+            display: flex;
+            flex-direction: column;
+
+            label {
+                font-weight: bold;
+            }
+
+            .label {
+                font-weight: bold;
+            }
+
+            input {
+                height: 2rem;
+                padding: 0.3rem;
+                border: 1px solid gray;
+                border-radius: 0.2rem;
+            }
+
+            .radioSection {
+
+                .radioInputs {
+                    display: flex;
+                    flex-direction: column;
+
+                    label {
+                        font-weight: normal;
+                    }
+                }
+
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 0.9rem;
+                justify-content: space-between;
+            }
+        }
+
+        .setField {
+            display: flex;
+
+            .label {
+                font-weight: bold;
+            }
+
+            .data {
+                margin-left: 0.3rem;
+            }
+        }
+
+        .editButtons {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            .removeButton {
+                width: 2rem;
+                height: 2rem;
+                border: none;
+                background-color: #00000000;
+
+                img {
+                    height: 1.75rem;
+                    width: 1.75rem;
+                }
+            }
+
+            .saveUserButton {
+                border: none;
+                background-color: rgb(95, 255, 0);
+                width: 5rem;
+                height: 3rem;
+                border-radius: 0.3rem;
+            }
+        }
+
+        .addUserButton {
+            border: none;
+            background-color: rgb(95, 255, 0);
+            margin: auto;
+            width: 5rem;
+            height: 3rem;
+            border-radius: 0.3rem;
         }
     }
 }

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { IProducts } from "../../Interfaces/IProducts"
 import styles from "./productComponent.module.scss"
 
@@ -6,9 +6,15 @@ export function Product() {
 
     const savedTheme = localStorage.getItem("theme")
 
-    const accessLevel = sessionStorage.getItem("accessLevel")
+    const currentUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
 
     const [products, setProducts] = useState<Array<IProducts>>(JSON.parse(localStorage.getItem("products") || "[]"))
+
+    const [filterProducts, setFilterProducts] = useState<Array<IProducts>>([])
+
+    useEffect(() => {
+        filter()
+    }, [products])
 
     function activateProduct(product: IProducts) {
         setProducts(prevState => {
@@ -18,12 +24,19 @@ export function Product() {
         })
     }
 
+    function filter() {
+        setFilterProducts(() => {
+            const newArr = products.filter((ps) => ps.companyId == currentUser.companyId)
+            return [...newArr]
+        })
+    }
+
     return (
         <div className={savedTheme == "light" ? styles.light : styles.dark}>
             <div className={styles.grid}>
                 {
-                    accessLevel == "admin"
-                        ? products.sort(function sortArray(a: IProducts, b: IProducts) {
+                    currentUser.accessLevel == "admin"
+                        ? filterProducts.sort(function sortArray(a: IProducts, b: IProducts) {
                             if (a.id < b.id) {
                                 return -1
                             }
@@ -51,7 +64,7 @@ export function Product() {
                                 </div>
                             )
                         })
-                        : products.sort().map((product: IProducts) => {
+                        : filterProducts.sort().map((product: IProducts) => {
                             return (
                                 <div key={product.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
                                     <p>Id: {product.id}</p>
