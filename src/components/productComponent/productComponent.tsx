@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react"
 import { IProducts } from "../../Interfaces/IProducts"
 import styles from "./productComponent.module.scss"
+import plus from "../../assets/plus-solid.svg"
+import { ModalProduct } from "../modalProduct/modalProduct"
+import editLight from "../../assets/pen-to-square-solid.svg"
+import editDark from "../../assets/pen-to-square-white.svg"
 
 export function Product() {
-
-    const savedTheme = localStorage.getItem("theme")
-
-    const currentUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
 
     const [products, setProducts] = useState<Array<IProducts>>(JSON.parse(localStorage.getItem("products") || "[]"))
 
     const [filterProducts, setFilterProducts] = useState<Array<IProducts>>([])
 
+    const [isProductModalOpen, setIsProductModalOpen] = useState<boolean>(false)
+
+    const [productBeingEdited, setProductBeingEdited] = useState<IProducts | null>(null)
+
+    const savedTheme = localStorage.getItem("theme")
+
+    const currentUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
+
     useEffect(() => {
+        localStorage.setItem("products", JSON.stringify(products))
         filter()
     }, [products])
 
@@ -36,18 +45,15 @@ export function Product() {
             <div className={styles.grid}>
                 {
                     currentUser.accessLevel == "admin"
-                        ? filterProducts.sort(function sortArray(a: IProducts, b: IProducts) {
-                            if (a.id < b.id) {
-                                return -1
-                            }
-                            if (a.id > b.id) {
-                                return 1
-                            }
-                            return 0
-                        }).map((product: IProducts) => {
+                        ? filterProducts.sort((a: IProducts, b: IProducts) => a.id < b.id ? -1 : 1).map((product: IProducts) => {
                             return (
                                 <div key={product.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
-                                    <p>Id: {product.id}</p>
+                                    <div className={styles.cardTop}>
+                                        <p>Id: {product.id}</p>
+                                        <button onClick={() => { setProductBeingEdited(product); setIsProductModalOpen(true) }}>
+                                            <img src={savedTheme == "light" ? editLight : editDark} alt="" />
+                                        </button>
+                                    </div>
                                     <p>Name: {product.name}</p>
                                     <p>Quantity: {product.quantity}</p>
                                     <p>Price: {product.price}</p>
@@ -57,14 +63,13 @@ export function Product() {
                                             {product.active ? "Deactivate" : "Activate"}
                                         </button>
                                     </div>
-                                    <p>Deleted: {product.deleted ? "true" : "false"}</p>
                                     <p>Created at: {product.createdAt}</p>
                                     <p>Updated at: {product.updatedAt}</p>
                                     <p>Company Id: {product.companyId}</p>
                                 </div>
                             )
                         })
-                        : filterProducts.sort().map((product: IProducts) => {
+                        : filterProducts.sort((a: IProducts, b: IProducts) => a.id < b.id ? -1 : 1).map((product: IProducts) => {
                             return (
                                 <div key={product.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
                                     <p>Id: {product.id}</p>
@@ -72,7 +77,6 @@ export function Product() {
                                     <p>Quantity: {product.quantity}</p>
                                     <p>Price: {product.price}</p>
                                     <p>Active: {product.active ? "true" : "false"}</p>
-                                    <p>Deleted: {product.deleted ? "true" : "false"}</p>
                                     <p>Created at: {product.createdAt}</p>
                                     <p>Updated at: {product.updatedAt}</p>
                                     <p>Company Id: {product.companyId}</p>
@@ -80,7 +84,23 @@ export function Product() {
                             )
                         })
                 }
+                <ModalProduct isProductModalOpen={isProductModalOpen}
+                    setIsProductModalOpen={setIsProductModalOpen}
+                    productBeingEdited={productBeingEdited}
+                    setProductBeingEdited={setProductBeingEdited}
+                    products={products}
+                    setProducts={setProducts}
+                    savedTheme={savedTheme}
+                    currentUser={currentUser}
+                />
             </div>
+            {
+                currentUser.accessLevel == "admin"
+                    ? <button className={styles.addButton} onClick={() => { setIsProductModalOpen(true) }}>
+                        <img src={plus}></img>
+                    </button>
+                    : null
+            }
         </div>
     )
 }

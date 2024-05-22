@@ -1,173 +1,18 @@
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 import { IUser } from "../../Interfaces/IUser"
 import styles from "./dataComponent.module.scss"
 import { ICompany } from "../../Interfaces/ICompany"
-import { Modal } from "../modalComponent/modalComponent"
 import plus from "../../assets/plus-solid.svg"
 import editDark from "../../assets/pen-to-square-white.svg"
 import editLight from "../../assets/pen-to-square-solid.svg"
-import trash from "../../assets/trash.svg"
-import xmark from "../../assets/xmark-white.svg"
-
-interface IModalContentProps {
-    isOpen: boolean,
-    setIsOpen: Dispatch<SetStateAction<boolean>>,
-    setUserBeingEdited: Dispatch<SetStateAction<IUser | null>>,
-    accessLevelInput: string,
-    setAccessLevelInput: Dispatch<SetStateAction<string>>
-    users: Array<IUser>,
-    currentUser: number,
-    userBeingEdited: IUser | null,
-    savedTheme: string | null,
-    setUsers: Dispatch<SetStateAction<Array<IUser>>>
-}
-
-const ModalContent = ({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdited, users, currentUser, savedTheme, accessLevelInput, setAccessLevelInput, setUsers }: IModalContentProps) => {
-    const nameInput = useRef<HTMLInputElement>(null)
-
-    const emailInput = useRef<HTMLInputElement>(null)
-
-    const passwordInput = useRef<HTMLInputElement>(null)
-
-    useEffect(() => {
-        if (!nameInput.current || !emailInput.current || !passwordInput.current) return
-
-        if (!userBeingEdited) {
-            nameInput.current.value = ""
-            emailInput.current.value = ""
-            passwordInput.current.value = ""
-            return
-        }
-
-        nameInput.current.value = userBeingEdited.name
-        emailInput.current.value = userBeingEdited.email
-        passwordInput.current.value = userBeingEdited.password
-        const accessLevelElement: any = document.getElementById(userBeingEdited.accessLevel)
-        accessLevelElement.checked = true
-
-    }, [userBeingEdited])
-
-    function addNewUser() {
-
-        const newUser: IUser = {
-            id: users.sort((a: IUser, b: IUser) => a.id > b.id ? -1 : 1)[0].id + 1,
-            name: nameInput.current!.value,
-            email: emailInput.current!.value,
-            password: passwordInput.current!.value,
-            accessLevel: accessLevelInput,
-            companyId: currentUser,
-            active: true
-        }
-
-        setUsers(prevUsers => [...prevUsers, newUser])
-        setIsOpen(!isOpen)
-    }
-
-    function editUser() {
-
-        const updatedUser: IUser = {
-            id: userBeingEdited!.id,
-            name: nameInput.current!.value,
-            email: emailInput.current!.value,
-            password: passwordInput.current!.value,
-            accessLevel: accessLevelInput,
-            companyId: currentUser,
-            active: userBeingEdited!.active
-        }
-
-        setUsers(() => {
-            const excludeOldUser = users.filter((ps) => ps.id != userBeingEdited!.id)
-            return [...excludeOldUser, updatedUser]
-        })
-
-        setUserBeingEdited(null)
-    }
-
-    function deleteUser(userBeingEdited: IUser | undefined) {
-        const removeUser = users.filter((u) => u.id != userBeingEdited!.id)
-
-        setUsers(removeUser)
-        setUserBeingEdited(null)
-    }
-
-    return (
-        <Modal isOpen={isOpen} close={() => { setUserBeingEdited(null); setIsOpen(!isOpen) }}>
-            <div className={savedTheme == "light" ? styles.addSectionLight : styles.addSectionDark}>
-                <div className={styles.topTab}>
-                    <div className={styles.setField}>
-                        <p className={styles.label}>Id: </p>
-                        <p className={styles.data}>{!!userBeingEdited ? userBeingEdited?.id : users.sort((a: IUser, b: IUser) => a.id > b.id ? -1 : 1)[0].id + 1}</p>
-                    </div>
-                    <button className={styles.closeButton} onClick={() => { setUserBeingEdited(null); setIsOpen(false) }}>
-                        <img src={xmark} alt="" />
-                    </button>
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="nameInpt">Name</label>
-                    <input ref={nameInput} id="nameInpt" type="text" />
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="emailInpt">Email</label>
-                    <input ref={emailInput} id="emailInpt" type="email" />
-                </div>
-                <div className={styles.formField}>
-                    <label htmlFor="passwordInpt">Password</label>
-                    <input ref={passwordInput} id="passwordInpt" type="text" />
-                </div>
-                <div className={styles.formField}>
-                    <p className={styles.label}>Access Level</p>
-                    <div className={styles.radioSection}>
-                        <div className={styles.radioInputs}>
-                            <label htmlFor="admin">Admin</label>
-                            <input type="radio"
-                                name="accessLevel"
-                                id="admin"
-                                value="admin"
-                                onChange={() => setAccessLevelInput("admin")}
-                            />
-                        </div>
-                        <div className={styles.radioInputs}>
-                            <label htmlFor="manager">Manager</label>
-                            <input type="radio"
-                                name="accessLevel"
-                                id="manager"
-                                value="manager"
-                                onChange={() => setAccessLevelInput("manager")}
-                            />
-                        </div>
-                        <div className={styles.radioInputs}>
-                            <label htmlFor="employee">Employee</label>
-                            <input type="radio"
-                                name="accessLevel"
-                                id="employee"
-                                value="employee"
-                                onChange={() => setAccessLevelInput("employee")}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className={styles.setField}>
-                    <p className={styles.label}>Company ID: </p>
-                    <p className={styles.data}>{currentUser}</p>
-                </div>
-                {
-                    userBeingEdited != null
-                        ? <div className={styles.editButtons}>
-                            <button className={styles.removeButton} onClick={() => { deleteUser(userBeingEdited); setIsOpen(false) }}>
-                                <img src={trash} alt="" />
-                            </button>
-                            <button className={styles.saveUserButton} onClick={() => { editUser(); setIsOpen(false) }}>Save</button>
-                        </div>
-                        : <button className={styles.addUserButton} onClick={() => addNewUser()}>Add</button>
-                }
-            </div>
-        </Modal>
-    )
-}
+import { ModalUsers } from "../modalUsers/modalUsers"
+import { ModalCompany } from "../modalCompany/modalCompany"
 
 export function Data() {
 
-    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false)
+
+    const [isCompanyModalOpen, setIsCompanyModalOpen] = useState<boolean>(false)
 
     const [accessLevelInput, setAccessLevelInput] = useState<string>("")
 
@@ -177,20 +22,27 @@ export function Data() {
 
     const [users, setUsers] = useState<Array<IUser>>(JSON.parse(localStorage.getItem("users") || "[]"))
 
+    const [companyBeingEdited, setCompanyBeingEdited] = useState<ICompany | null>(null)
+
     const [filterCompanies, setFilterCompanies] = useState<Array<ICompany>>([])
 
-    const [showedComponent, setShowedComponent] = useState<number>(0)
+    const [showedComponent, setShowedComponent] = useState<number>(1)
 
     const savedTheme = localStorage.getItem("theme")
 
     const currentUser: IUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
 
-    const companies: Array<ICompany> = (JSON.parse(localStorage.getItem("companies") || "[]"))
+    const [companies, setCompanies] = useState<Array<ICompany>>(JSON.parse(localStorage.getItem("companies") || "[]"))
 
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))
         filterData()
     }, [users])
+
+    useEffect(() => {
+        localStorage.setItem("companies", JSON.stringify(companies))
+        filterData()
+    }, [companies])
 
     function activateUser(user: IUser) {
         setUsers((prevState) => {
@@ -223,20 +75,12 @@ export function Data() {
                     1: <div className={styles.grid}>
                         {
                             currentUser.accessLevel == "admin"
-                                ? filterUsers.sort(function sortArray(a: IUser, b: IUser) {
-                                    if (a.id < b.id) {
-                                        return -1
-                                    }
-                                    if (a.id > b.id) {
-                                        return 1
-                                    }
-                                    return 0
-                                }).map((user: IUser) => {
+                                ? filterUsers.sort((a: IUser, b: IUser) => a.id < b.id ? -1 : 1).map((user: IUser) => {
                                     return (
                                         <div key={user.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
                                             <div className={styles.cardTop}>
                                                 <p>Id: {user.id}</p>
-                                                <button onClick={() => { setUserBeingEdited(user); setIsOpen(true) }}>
+                                                <button onClick={() => { setUserBeingEdited(user); setIsUserModalOpen(true) }}>
                                                     <img src={savedTheme == "light" ? editLight : editDark} alt="" />
                                                 </button>
                                             </div>
@@ -255,7 +99,7 @@ export function Data() {
                                         </div>
                                     )
                                 })
-                                : filterUsers.map((user: IUser) => {
+                                : filterUsers.sort((a: IUser, b: IUser) => a.id < b.id ? -1 : 1).map((user: IUser) => {
                                     return (
                                         <div key={user.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
                                             <p>Id: {user.id}</p>
@@ -269,11 +113,15 @@ export function Data() {
                                     )
                                 })
                         }
-                        <button className={styles.addButton} onClick={() => { setIsOpen(true) }}>
-                            <img src={plus}></img>
-                        </button>
-                        <ModalContent isOpen={isOpen}
-                            setIsOpen={setIsOpen}
+                        {
+                            currentUser.accessLevel == "admin"
+                                ? <button className={styles.addButton} onClick={() => { setIsUserModalOpen(true) }}>
+                                    <img src={plus}></img>
+                                </button>
+                                : null
+                        }
+                        <ModalUsers isOpen={isUserModalOpen}
+                            setIsOpen={setIsUserModalOpen}
                             userBeingEdited={userBeingEdited}
                             setUserBeingEdited={setUserBeingEdited}
                             accessLevelInput={accessLevelInput}
@@ -287,10 +135,15 @@ export function Data() {
                     2: <div className={styles.grid}>
                         {
                             currentUser.accessLevel == "admin"
-                                ? filterCompanies.sort((a: ICompany, b: ICompany) => a.id > b.id ? -1 : 1).map((company: ICompany) => {
+                                ? filterCompanies.map((company: ICompany) => {
                                     return (
                                         <div key={company.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
-                                            <p>Id: {company.id}</p>
+                                            <div className={styles.cardTop}>
+                                                <p>Id: {company.id}</p>
+                                                <button onClick={() => { setCompanyBeingEdited(company); setIsCompanyModalOpen(true) }}>
+                                                    <img src={savedTheme == "light" ? editLight : editDark} alt="" />
+                                                </button>
+                                            </div>
                                             <p>Company name: {company.companyName}</p>
                                             <p>CNPJ: {company.CNPJ}</p>
                                             <p>Active: {company.active ? "true" : "false"}</p>
@@ -308,6 +161,14 @@ export function Data() {
                                     )
                                 })
                         }
+                        <ModalCompany isCompanyModalOpen={isCompanyModalOpen}
+                            setIsCompanyModalOpen={setIsCompanyModalOpen}
+                            companyBeingEdited={companyBeingEdited}
+                            setCompanyBeingEdited={setCompanyBeingEdited}
+                            companies={companies}
+                            setCompanies={setCompanies}
+                            savedTheme={savedTheme}
+                        />
                     </div>
                 }[showedComponent]
             }
