@@ -43,33 +43,14 @@ export function LoginPage() {
     }
 
     function setTheme() {
-        if (selectedTheme == "dark" && !showPassword) {
-            setSelectedTheme("light")
-            setThemeButtonImage(lightImage)
-            setShowPasswordButtonImage(eyeSlashedLight)
-            localStorage.setItem("theme", "light")
-            return
-        }
-        else if (selectedTheme == "dark" && showPassword == true) {
-            setSelectedTheme("light")
-            setThemeButtonImage(lightImage)
-            setShowPasswordButtonImage(eyeLight)
-            localStorage.setItem("theme", "light")
-            return
-        }
-        else if (selectedTheme == "light" && !showPassword) {
-            setSelectedTheme("dark")
-            setThemeButtonImage(darkImage)
-            setShowPasswordButtonImage(eyeSlashedDark)
-            localStorage.removeItem("theme")
-            return
-        }
-        else {
-            setSelectedTheme("dark")
-            setThemeButtonImage(darkImage)
-            setShowPasswordButtonImage(eyeDark)
-            localStorage.removeItem("theme")
-        }
+
+        setSelectedTheme(selectedTheme == "light" ? "dark" : "light")
+        setThemeButtonImage(selectedTheme == "light" ? darkImage : lightImage)
+        setShowPasswordButtonImage(!showPassword ? (selectedTheme == "light" ? eyeSlashedDark : eyeSlashedLight) : (selectedTheme == "light" ? eyeDark : eyeLight))
+
+        localStorage.setItem("theme", selectedTheme)
+        return
+
     }
 
     function setShowPass() {
