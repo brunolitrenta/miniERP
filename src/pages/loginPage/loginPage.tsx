@@ -71,10 +71,10 @@ export function LoginPage() {
         setThemeButtonImage(selectedTheme == "light" ? darkImage : lightImage)
         setShowPasswordButtonImage(!showPassword ? (selectedTheme == "light" ? eyeSlashedDark : eyeSlashedLight) : (selectedTheme == "light" ? eyeDark : eyeLight))
 
-        if(selectedTheme == "dark"){
+        if (selectedTheme == "dark") {
             localStorage.setItem("theme", "light")
         }
-        else{
+        else {
             localStorage.removeItem("theme")
         }
         return

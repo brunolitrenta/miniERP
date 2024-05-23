@@ -1,4 +1,4 @@
-export interface ICompany{
+export interface ICompany {
     id: number,
     companyName: string,
     CNPJ: string,

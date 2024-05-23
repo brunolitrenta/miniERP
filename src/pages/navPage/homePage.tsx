@@ -9,7 +9,7 @@ export function HomePage() {
 
     const navigate = useNavigate()
 
-    const currentUser:IUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
+    const currentUser: IUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
 
     const savedTheme = localStorage.getItem("theme")
 

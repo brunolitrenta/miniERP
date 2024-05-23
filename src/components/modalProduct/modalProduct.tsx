@@ -46,7 +46,7 @@ export function ModalProduct({ isProductModalOpen, setIsProductModalOpen, produc
     function addNewProduct() {
 
         const newProduct: IProducts = {
-            id: products.length == 0 ? 1 :products.sort((a: IProducts, b: IProducts) => a.id > b.id ? -1 : 1)[0].id + 1,
+            id: products.length == 0 ? 1 : products.sort((a: IProducts, b: IProducts) => a.id > b.id ? -1 : 1)[0].id + 1,
             name: nameInput.current!.value,
             quantity: JSON.parse(quantityInput.current!.value),
             price: JSON.parse(priceInput.current!.value),
@@ -98,7 +98,7 @@ export function ModalProduct({ isProductModalOpen, setIsProductModalOpen, produc
                             {
                                 !!productBeingEdited
                                     ? productBeingEdited?.id
-                                    : (products.length == 0 ? 1 :products.sort((a: IProducts, b: IProducts) => a.id > b.id ? -1 : 1)[0].id + 1)
+                                    : (products.length == 0 ? 1 : products.sort((a: IProducts, b: IProducts) => a.id > b.id ? -1 : 1)[0].id + 1)
                             }
                         </p>
                     </div>
