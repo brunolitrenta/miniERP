@@ -44,7 +44,7 @@ export function Product() {
         <div className={savedTheme == "light" ? styles.light : styles.dark}>
             <div className={styles.grid}>
                 {
-                    currentUser.accessLevel == "admin"
+                    currentUser.accessLevel == "admin" || currentUser.accessLevel == "manager"
                         ? filterProducts.sort((a: IProducts, b: IProducts) => a.id < b.id ? -1 : 1).map((product: IProducts) => {
                             return (
                                 <div key={product.id} className={savedTheme == "light" ? styles.dataLight : styles.dataDark}>
@@ -95,7 +95,7 @@ export function Product() {
                 />
             </div>
             {
-                currentUser.accessLevel == "admin"
+                currentUser.accessLevel == "admin" || currentUser.accessLevel == "manager"
                     ? <button className={styles.addButton} onClick={() => { setIsProductModalOpen(true) }}>
                         <img src={plus}></img>
                     </button>

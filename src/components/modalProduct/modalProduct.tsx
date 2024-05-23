@@ -25,9 +25,7 @@ export function ModalProduct({ isProductModalOpen, setIsProductModalOpen, produc
 
     const priceInput = useRef<HTMLInputElement>(null)
 
-    const current = new Date();
-
-    const date = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+    const date = new Date().toLocaleDateString()
 
     useEffect(() => {
         if (!nameInput.current || !quantityInput.current || !priceInput.current) return
@@ -86,6 +84,8 @@ export function ModalProduct({ isProductModalOpen, setIsProductModalOpen, produc
         const removeProduct = products.filter((p) => p.id != productBeingEdited.id)
 
         setProducts(removeProduct)
+
+        setProductBeingEdited(null)
     }
 
     return (

@@ -47,6 +47,10 @@
                 width: 1.5rem;
                 height: 1.5rem;
             }
+
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
 
@@ -89,6 +93,10 @@
         width: 5rem;
         height: 3rem;
         border-radius: 0.3rem;
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }
 
@@ -141,6 +149,10 @@
                 width: 1.5rem;
                 height: 1.5rem;
             }
+
+            &:hover{
+                cursor: pointer;
+            }
         }
     }
 
@@ -185,5 +197,9 @@
         width: 5rem;
         height: 3rem;
         border-radius: 0.3rem;
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }

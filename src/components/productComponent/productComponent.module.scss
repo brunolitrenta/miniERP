@@ -37,6 +37,10 @@
                     width: 1.75rem;
                     height: 1.75rem;
                 }
+
+                &:hover{
+                    cursor: pointer;
+                }
             }
         }
 
@@ -91,6 +95,10 @@
             width: 3rem;
             height: 3rem;
         }
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 }
 
@@ -138,6 +146,10 @@
                     img {
                         width: 1.75rem;
                         height: 1.75rem;
+                    }
+
+                    &:hover{
+                        cursor: pointer;
                     }
                 }
             }
@@ -193,6 +205,10 @@
         img {
             width: 3rem;
             height: 3rem;
+        }
+
+        &:hover{
+            cursor: pointer;
         }
     }
 }
