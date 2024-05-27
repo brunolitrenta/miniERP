@@ -3,18 +3,19 @@ import { ICompany } from "../../Interfaces/ICompany";
 import { Modal } from "../modalComponent/modalComponent";
 import styles from "./modalCompany.module.scss"
 import xmark from "../../assets/xmark-white.svg"
+import { useData } from "../../hooks/dataContext";
 
 interface ICompanyContentProps {
     isCompanyModalOpen: boolean,
     setIsCompanyModalOpen: Dispatch<SetStateAction<boolean>>,
     companyBeingEdited: ICompany | null,
     setCompanyBeingEdited: Dispatch<SetStateAction<ICompany | null>>,
-    companies: Array<ICompany>,
-    setCompanies: Dispatch<SetStateAction<Array<ICompany>>>,
     savedTheme: string | null,
 }
 
-export function ModalCompany({ isCompanyModalOpen, setIsCompanyModalOpen, companyBeingEdited, setCompanyBeingEdited, companies, setCompanies, savedTheme }: ICompanyContentProps) {
+export function ModalCompany({ isCompanyModalOpen, setIsCompanyModalOpen, companyBeingEdited, setCompanyBeingEdited, savedTheme }: ICompanyContentProps) {
+
+    const { companies, setCompanies } = useData()
 
     const nameInput = useRef<HTMLInputElement>(null)
 
@@ -35,6 +36,20 @@ export function ModalCompany({ isCompanyModalOpen, setIsCompanyModalOpen, compan
 
     function editCompany() {
 
+        if (!nameInput.current || !cnpjInput.current) return
+
+        if (nameInput.current.value == "" || cnpjInput.current.value == "") {
+            window.alert("All fields must be filled!")
+            return
+        }
+
+        const foundCnpj = companies.find(cp => cp.CNPJ == cnpjInput.current!.value)
+
+        if (foundCnpj) {
+            window.alert("This CNPJ is already registered")
+            return
+        }
+
         const updatedCompany: ICompany = {
             id: companyBeingEdited!.id,
             companyName: nameInput.current!.value,
@@ -48,6 +63,7 @@ export function ModalCompany({ isCompanyModalOpen, setIsCompanyModalOpen, compan
         })
 
         setCompanyBeingEdited(null)
+        setIsCompanyModalOpen(false)
     }
 
     return (
@@ -70,7 +86,7 @@ export function ModalCompany({ isCompanyModalOpen, setIsCompanyModalOpen, compan
                     <label htmlFor="cnpjInpt">CNPJ</label>
                     <input ref={cnpjInput} id="cnpjInpt" type="text" />
                 </div>
-                <button className={styles.saveCompanyButton} onClick={() => { editCompany(); setIsCompanyModalOpen(false) }}>Save</button>
+                <button className={styles.saveCompanyButton} onClick={() => { editCompany() }}>Save</button>
             </div>
         </Modal>
     )

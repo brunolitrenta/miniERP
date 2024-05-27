@@ -3,13 +3,13 @@ import styles from "./homePage.module.scss"
 import { Data } from "../../components/dataComponent/dataComponent"
 import { Product } from "../../components/productComponent/productComponent"
 import { useNavigate } from "react-router-dom"
-import { IUser } from "../../Interfaces/IUser"
+import { useCurrentUserContext } from "../../hooks/currentUserContext"
 
 export function HomePage() {
 
-    const navigate = useNavigate()
+    const {currentUser} = useCurrentUserContext()
 
-    const currentUser: IUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
+    const navigate = useNavigate()
 
     const savedTheme = localStorage.getItem("theme")
 
@@ -28,12 +28,12 @@ export function HomePage() {
         <div className={savedTheme == "light" ? styles.light : styles.dark}>
             <h3>Welcome, {currentUser.name}</h3>
             <nav className={styles.navMenu}>
-                <button className={styles.navButton} onClick={() => setShowedComponent(1)}>Data</button>
-                <button className={styles.navButton} onClick={() => setShowedComponent(2)}>Products</button>
+                <button className={showedComponent == 1 ? styles.activeNavButton : styles.inactiveNavButton} onClick={() => setShowedComponent(1)}>Data</button>
+                <button className={showedComponent == 2 ? styles.activeNavButton : styles.inactiveNavButton} onClick={() => setShowedComponent(2)}>Products</button>
             </nav>
             {
                 {
-                    1: <Data />,
+                    1:<Data />,
 
                     2: <Product />
                 }[showedComponent]

@@ -5,8 +5,11 @@ import plus from "../../assets/plus-solid.svg"
 import { ModalProduct } from "../modalProduct/modalProduct"
 import editLight from "../../assets/pen-to-square-solid.svg"
 import editDark from "../../assets/pen-to-square-white.svg"
+import { useCurrentUserContext } from "../../hooks/currentUserContext"
 
 export function Product() {
+
+    const {currentUser} = useCurrentUserContext()
 
     const [products, setProducts] = useState<Array<IProducts>>(JSON.parse(localStorage.getItem("products") || "[]"))
 
@@ -17,8 +20,6 @@ export function Product() {
     const [productBeingEdited, setProductBeingEdited] = useState<IProducts | null>(null)
 
     const savedTheme = localStorage.getItem("theme")
-
-    const currentUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
 
     useEffect(() => {
         localStorage.setItem("products", JSON.stringify(products))
@@ -91,7 +92,6 @@ export function Product() {
                     products={products}
                     setProducts={setProducts}
                     savedTheme={savedTheme}
-                    currentUser={currentUser}
                 />
             </div>
             {

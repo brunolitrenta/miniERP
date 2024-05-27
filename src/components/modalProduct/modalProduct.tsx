@@ -4,7 +4,7 @@ import { Modal } from "../modalComponent/modalComponent";
 import styles from "./modalProduct.module.scss"
 import xmark from "../../assets/xmark-white.svg"
 import trash from "../../assets/trash.svg"
-import { IUser } from "../../Interfaces/IUser";
+import { useCurrentUserContext } from "../../hooks/currentUserContext";
 
 interface IProductContentProps {
     isProductModalOpen: boolean,
@@ -14,10 +14,11 @@ interface IProductContentProps {
     products: Array<IProducts>,
     setProducts: Dispatch<SetStateAction<Array<IProducts>>>,
     savedTheme: string | null,
-    currentUser: IUser
 }
 
-export function ModalProduct({ isProductModalOpen, setIsProductModalOpen, productBeingEdited, setProductBeingEdited, products, setProducts, savedTheme, currentUser }: IProductContentProps) {
+export function ModalProduct({ isProductModalOpen, setIsProductModalOpen, productBeingEdited, setProductBeingEdited, products, setProducts, savedTheme }: IProductContentProps) {
+
+    const {currentUser} = useCurrentUserContext()
 
     const nameInput = useRef<HTMLInputElement>(null)
 

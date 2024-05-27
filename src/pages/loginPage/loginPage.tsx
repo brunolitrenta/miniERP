@@ -9,12 +9,11 @@ import eyeSlashedDark from "../../assets/eye-slash-white.svg"
 import { useNavigate } from "react-router-dom"
 import { IUser } from "../../Interfaces/IUser"
 import { ICompany } from "../../Interfaces/ICompany"
+import { useData } from "../../hooks/dataContext"
 
 export function LoginPage() {
 
-    const [users, setUsers] = useState<Array<IUser>>(JSON.parse(localStorage.getItem("users") || "[]"))
-
-    const [companies, setCompanies] = useState<Array<ICompany>>(JSON.parse(localStorage.getItem("companies") || "[]"))
+    const {users, setUsers, companies, setCompanies} = useData()
 
     const navigate = useNavigate()
 
@@ -117,10 +116,45 @@ export function LoginPage() {
 
     function registerData() {
 
-        if (companyNameRef.current == null || cnpjRef.current == null || nameRef.current == null || emailRef.current == null || passwordRef.current == null || confirmPasswordRef.current == null) return
+        if (!companyNameRef.current || !cnpjRef.current || !nameRef.current || !emailRef.current || !passwordRef.current || !confirmPasswordRef.current) return
 
         if (companyNameRef.current.value == "" || cnpjRef.current.value == "" || nameRef.current.value == "" || emailRef.current.value == "" || passwordRef.current.value == "" || confirmPasswordRef.current.value == "") {
             window.alert("All fields must be filled!")
+            return
+        }
+
+        const foundName = users.find(us => us.name == nameRef.current!.value)
+
+        const foundEmail = users.find(us => us.email == emailRef.current!.value)
+
+        const foundCnpj = companies.find(cp => cp.CNPJ == cnpjRef.current!.value)
+
+        if(foundName && foundEmail && foundCnpj){
+            window.alert("This name, email and CNPJ are already registered.")
+            return
+        }
+        else if(foundName && foundEmail && !foundCnpj){
+            window.alert("This name and email are already registered.")
+            return
+        }
+        else if(foundName && !foundEmail && foundCnpj){
+            window.alert("This name and CNPJ are already registered.")
+            return
+        }
+        else if(!foundName && foundEmail && foundCnpj){
+            window.alert("This email and CNPJ are already registered.")
+            return
+        }
+        else if(foundName && !foundEmail && !foundCnpj){
+            window.alert("This name is already registered.")
+            return
+        }
+        else if(!foundName && foundEmail && !foundCnpj){
+            window.alert("This email is already registered.")
+            return
+        }
+        else if(!foundName && !foundEmail && foundCnpj){
+            window.alert("This CNPJ is already registered.")
             return
         }
 

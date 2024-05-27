@@ -7,6 +7,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
+import { CurrentUserContextProvider } from './hooks/currentUserContext';
+import { DataContextProvider } from './hooks/dataContext';
 
 const router = createBrowserRouter([
   {
@@ -15,12 +17,16 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <HomePage />,
+    element: <CurrentUserContextProvider>
+      <HomePage />
+    </CurrentUserContextProvider>,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <DataContextProvider>
+      <RouterProvider router={router} />
+    </DataContextProvider>
   </React.StrictMode>,
 )

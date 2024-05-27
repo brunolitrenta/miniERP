@@ -19,7 +19,21 @@
         align-items: center;
         width: 13rem;
 
-        .navButton {
+        .activeNavButton {
+            font-weight: bold;
+            color: #fff;
+            border: none;
+            background-color: #323232;
+            padding: 0.5rem;
+            border-radius: 1rem;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(110%);
+            }
+        }
+
+        .inactiveNavButton {
             font-weight: bold;
             color: #fff;
             border: none;
@@ -28,11 +42,6 @@
             &:hover {
                 cursor: pointer;
                 transform: scale(110%);
-            }
-
-            &:focus {
-                transform: scale(110%);
-                text-decoration: underline;
             }
         }
     }
@@ -57,7 +66,21 @@
         align-items: center;
         width: 13rem;
 
-        .navButton {
+        .activeNavButton {
+            font-weight: bold;
+            color: #000;
+            border: none;
+            background-color: rgb(220, 220, 220);
+            padding: 0.5rem;
+            border-radius: 1rem;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(110%);
+            }
+        }
+
+        .inactiveNavButton {
             font-weight: bold;
             color: #000;
             border: none;
@@ -66,11 +89,6 @@
             &:hover {
                 cursor: pointer;
                 transform: scale(110%);
-            }
-
-            &:focus {
-                transform: scale(110%);
-                text-decoration: underline;
             }
         }
     }

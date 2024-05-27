@@ -1,25 +1,29 @@
-import { Dispatch, SetStateAction, useEffect, useRef } from "react"
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react"
 import { IUser } from "../../Interfaces/IUser"
 import { Modal } from "../modalComponent/modalComponent"
 import trash from "../../assets/trash.svg"
 import xmark from "../../assets/xmark-white.svg"
 import styles from "./modalUsers.module.scss"
+import { useData } from "../../hooks/dataContext"
+import { useCurrentUserContext } from "../../hooks/currentUserContext"
 
 interface IModalContentProps {
     isOpen: boolean,
     setIsOpen: Dispatch<SetStateAction<boolean>>,
     setUserBeingEdited: Dispatch<SetStateAction<IUser | null>>,
-    accessLevelInput: string,
-    setAccessLevelInput: Dispatch<SetStateAction<string>>
-    users: Array<IUser>,
-    currentUser: number,
     userBeingEdited: IUser | null,
     savedTheme: string | null,
-    setUsers: Dispatch<SetStateAction<Array<IUser>>>
 }
 
 
-export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdited, users, currentUser, savedTheme, accessLevelInput, setAccessLevelInput, setUsers }: IModalContentProps) {
+export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdited, savedTheme }: IModalContentProps) {
+
+    const { users, setUsers } = useData()
+
+    const { currentUser } = useCurrentUserContext()
+
+    const [accessLevelInput, setAccessLevelInput] = useState<string | undefined>(undefined)
+
     const nameInput = useRef<HTMLInputElement>(null)
 
     const emailInput = useRef<HTMLInputElement>(null)
@@ -43,31 +47,83 @@ export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdi
 
     }, [userBeingEdited])
 
+    useEffect(() => {
+        setAccessLevelInput(undefined)
+    }, [users])
+
     function addNewUser() {
+
+        if (!nameInput.current || !emailInput.current || !passwordInput.current) return
+
+        if (nameInput.current.value == "" || emailInput.current.value == "" || passwordInput.current.value == "" || !accessLevelInput) {
+            window.alert("All fields must be filled!")
+            return
+        }
+
+        const foundName = users.find(us => us.name == nameInput.current!.value)
+
+        const foundEmail = users.find(us => us.email == emailInput.current!.value)
+
+        if (foundName && foundEmail) {
+            window.alert("This username and email has already been registered")
+            return
+        }
+        else if (foundEmail && !foundName) {
+            window.alert("This email has already been registered")
+            return
+        }
+        else if (foundName && !foundEmail) {
+            window.alert("This username has already been registered")
+            return
+        }
 
         const newUser: IUser = {
             id: users.sort((a: IUser, b: IUser) => a.id > b.id ? -1 : 1)[0].id + 1,
-            name: nameInput.current!.value,
-            email: emailInput.current!.value,
-            password: passwordInput.current!.value,
-            accessLevel: accessLevelInput,
-            companyId: currentUser,
+            name: nameInput.current.value,
+            email: emailInput.current.value,
+            password: passwordInput.current.value,
+            accessLevel: accessLevelInput!,
+            companyId: currentUser.companyId,
             active: true
         }
 
         setUsers(prevUsers => [...prevUsers, newUser])
-        setIsOpen(!isOpen)
+        setIsOpen(false)
     }
 
     function editUser() {
 
+        if (!nameInput.current || !emailInput.current || !passwordInput.current) return
+
+        if (nameInput.current.value == "" || emailInput.current.value == "" || passwordInput.current.value == "" || !accessLevelInput) {
+            window.alert("All fields must be filled!")
+            return
+        }
+
+        const foundName = users.find(us => us.name == nameInput.current!.value && us.id != userBeingEdited!.id)
+
+        const foundEmail = users.find(us => us.email == emailInput.current!.value && us.id != userBeingEdited!.id)
+
+        if (foundName && foundEmail) {
+            window.alert("This username and email are already registered")
+            return
+        }
+        else if (foundEmail && !foundName) {
+            window.alert("This email is already registered")
+            return
+        }
+        else if (foundName && !foundEmail) {
+            window.alert("This username is already registered")
+            return
+        }
+
         const updatedUser: IUser = {
             id: userBeingEdited!.id,
-            name: nameInput.current!.value,
-            email: emailInput.current!.value,
-            password: passwordInput.current!.value,
-            accessLevel: accessLevelInput,
-            companyId: currentUser,
+            name: nameInput.current.value,
+            email: emailInput.current.value,
+            password: passwordInput.current.value,
+            accessLevel: accessLevelInput!,
+            companyId: currentUser.companyId,
             active: userBeingEdited!.active
         }
 
@@ -77,6 +133,7 @@ export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdi
         })
 
         setUserBeingEdited(null)
+        setIsOpen(false)
     }
 
     function deleteUser(userBeingEdited: IUser | undefined) {
@@ -84,17 +141,18 @@ export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdi
 
         setUsers(removeUser)
         setUserBeingEdited(null)
+        setIsOpen(false)
     }
 
     return (
-        <Modal isOpen={isOpen} close={() => { setUserBeingEdited(null); setIsOpen(!isOpen) }}>
+        <Modal isOpen={isOpen} close={() => { setUserBeingEdited(null); setAccessLevelInput(undefined); setIsOpen(false) }}>
             <div className={savedTheme == "light" ? styles.addSectionLight : styles.addSectionDark}>
                 <div className={styles.topTab}>
                     <div className={styles.setField}>
                         <p className={styles.label}>Id: </p>
                         <p className={styles.data}>{!!userBeingEdited ? userBeingEdited?.id : users.sort((a: IUser, b: IUser) => a.id > b.id ? -1 : 1)[0].id + 1}</p>
                     </div>
-                    <button className={styles.closeButton} onClick={() => { setUserBeingEdited(null); setIsOpen(false) }}>
+                    <button className={styles.closeButton} onClick={() => { setUserBeingEdited(null); setAccessLevelInput(undefined); setIsOpen(false) }}>
                         <img src={xmark} alt="" />
                     </button>
                 </div>
@@ -147,15 +205,15 @@ export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdi
                 </div>
                 <div className={styles.setField}>
                     <p className={styles.label}>Company ID: </p>
-                    <p className={styles.data}>{currentUser}</p>
+                    <p className={styles.data}>{currentUser.companyId}</p>
                 </div>
                 {
                     userBeingEdited != null
                         ? <div className={styles.editButtons}>
-                            <button className={styles.removeButton} onClick={() => { deleteUser(userBeingEdited); setIsOpen(false) }}>
+                            <button className={styles.removeButton} onClick={() => { deleteUser(userBeingEdited) }}>
                                 <img src={trash} alt="" />
                             </button>
-                            <button className={styles.saveUserButton} onClick={() => { editUser(); setIsOpen(false) }}>Save</button>
+                            <button className={styles.saveUserButton} onClick={() => { editUser() }}>Save</button>
                         </div>
                         : <button className={styles.addUserButton} onClick={() => addNewUser()}>Add</button>
                 }

@@ -7,20 +7,22 @@ import editDark from "../../assets/pen-to-square-white.svg"
 import editLight from "../../assets/pen-to-square-solid.svg"
 import { ModalUsers } from "../modalUsers/modalUsers"
 import { ModalCompany } from "../modalCompany/modalCompany"
+import { useData } from "../../hooks/dataContext"
+import { useCurrentUserContext } from "../../hooks/currentUserContext"
 
 export function Data() {
+
+    const {companies, users, setUsers} = useData()
+
+    const {currentUser} = useCurrentUserContext()
 
     const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false)
 
     const [isCompanyModalOpen, setIsCompanyModalOpen] = useState<boolean>(false)
 
-    const [accessLevelInput, setAccessLevelInput] = useState<string>("")
-
     const [userBeingEdited, setUserBeingEdited] = useState<IUser | null>(null)
 
     const [filterUsers, setFilterUsers] = useState<Array<IUser>>([])
-
-    const [users, setUsers] = useState<Array<IUser>>(JSON.parse(localStorage.getItem("users") || "[]"))
 
     const [companyBeingEdited, setCompanyBeingEdited] = useState<ICompany | null>(null)
 
@@ -30,17 +32,12 @@ export function Data() {
 
     const savedTheme = localStorage.getItem("theme")
 
-    const currentUser: IUser = JSON.parse(sessionStorage.getItem("loggedUser") || "[]")
-
-    const [companies, setCompanies] = useState<Array<ICompany>>(JSON.parse(localStorage.getItem("companies") || "[]"))
-
     useEffect(() => {
         localStorage.setItem("users", JSON.stringify(users))
         filterData()
     }, [users])
 
     useEffect(() => {
-        localStorage.setItem("companies", JSON.stringify(companies))
         filterData()
     }, [companies])
 
@@ -67,8 +64,8 @@ export function Data() {
     return (
         <div className={savedTheme == "light" ? styles.light : styles.dark}>
             <nav className={styles.navMenu}>
-                <button className={styles.navButton} onClick={() => setShowedComponent(1)}>Users</button>
-                <button className={styles.navButton} onClick={() => setShowedComponent(2)}>Company</button>
+                <button className={showedComponent == 1 ? styles.activeNavButton : styles.inactiveNavButton} onClick={() => setShowedComponent(1)}>Users</button>
+                <button className={showedComponent == 2 ? styles.activeNavButton : styles.inactiveNavButton} onClick={() => setShowedComponent(2)}>Company</button>
             </nav>
             {
                 {
@@ -124,12 +121,7 @@ export function Data() {
                             setIsOpen={setIsUserModalOpen}
                             userBeingEdited={userBeingEdited}
                             setUserBeingEdited={setUserBeingEdited}
-                            accessLevelInput={accessLevelInput}
-                            setAccessLevelInput={setAccessLevelInput}
-                            users={users}
-                            currentUser={currentUser.companyId}
                             savedTheme={savedTheme}
-                            setUsers={setUsers}
                         />
                     </div>,
                     2: <div className={styles.grid}>
@@ -165,8 +157,6 @@ export function Data() {
                             setIsCompanyModalOpen={setIsCompanyModalOpen}
                             companyBeingEdited={companyBeingEdited}
                             setCompanyBeingEdited={setCompanyBeingEdited}
-                            companies={companies}
-                            setCompanies={setCompanies}
                             savedTheme={savedTheme}
                         />
                     </div>
