@@ -9,7 +9,7 @@ import { useCurrentUserContext } from "../../hooks/currentUserContext"
 
 export function Product() {
 
-    const {currentUser} = useCurrentUserContext()
+    const { currentUser } = useCurrentUserContext()
 
     const [products, setProducts] = useState<Array<IProducts>>(JSON.parse(localStorage.getItem("products") || "[]"))
 

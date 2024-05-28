@@ -232,6 +232,7 @@
         background-color: #242424;
 
         .grid {
+            max-width: 81%;
             display: flex;
             flex-wrap: wrap;
 
@@ -312,7 +313,7 @@
             justify-content: center;
             align-items: center;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             background-color: #57ce57;
             width: 12rem;
             height: 7rem;
@@ -344,6 +345,7 @@
         background-color: #fff;
 
         .grid {
+            max-width: 81%;
             display: flex;
             flex-wrap: wrap;
 
@@ -423,7 +425,7 @@
             justify-content: center;
             align-items: center;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             background-color: #57ce57;
             width: 12rem;
             height: 7rem;

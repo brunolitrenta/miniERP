@@ -324,6 +324,7 @@
                 font-weight: bold;
                 color: #fff;
                 border: none;
+                padding: 0.5rem;
                 background-color: #00000000;
 
                 &:hover {
@@ -335,9 +336,9 @@
 
         .addButton {
             position: fixed;
-            top: 90%;
+            top: 80%;
             left: 50%;
-            transform: translate(-50%,-50%);
+            transform: translate(-50%, -50%);
 
             display: flex;
             justify-content: center;
@@ -360,8 +361,10 @@
         }
 
         .grid {
+            max-width: 81%;
             display: flex;
             flex-wrap: wrap;
+
             .dataDark {
                 margin: 0.7rem;
                 flex-direction: column;
@@ -397,7 +400,7 @@
 
                 .activeSection {
                     display: flex;
-                    justify-content: space-between;    
+                    justify-content: space-between;
                     align-items: center;
 
                     .buttonActive {
@@ -468,6 +471,7 @@
                 font-weight: bold;
                 color: #000;
                 border: none;
+                padding: 0.5rem;
                 background-color: #00000000;
 
                 &:hover {
@@ -487,7 +491,7 @@
             justify-content: center;
             align-items: center;
             border: none;
-            border-radius: 0.5rem;
+            border-radius: 1rem;
             background-color: #57ce57;
             width: 12rem;
             height: 7rem;
@@ -505,6 +509,7 @@
         }
 
         .grid {
+            max-width: 81%;
             display: flex;
             flex-wrap: wrap;
 

@@ -12,9 +12,9 @@ import { useCurrentUserContext } from "../../hooks/currentUserContext"
 
 export function Data() {
 
-    const {companies, users, setUsers} = useData()
+    const { companies, users, setUsers } = useData()
 
-    const {currentUser} = useCurrentUserContext()
+    const { currentUser } = useCurrentUserContext()
 
     const [isUserModalOpen, setIsUserModalOpen] = useState<boolean>(false)
 
