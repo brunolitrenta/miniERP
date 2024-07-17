@@ -150,7 +150,7 @@ export function ModalUsers({ isOpen, setIsOpen, userBeingEdited, setUserBeingEdi
                 <div className={styles.topTab}>
                     <div className={styles.setField}>
                         <p className={styles.label}>Id: </p>
-                        <p className={styles.data}>{!!userBeingEdited ? userBeingEdited?.id : users.sort((a: IUser, b: IUser) => a.id > b.id ? -1 : 1)[0].id + 1}</p>
+                        <p className={styles.data}>{userBeingEdited ? userBeingEdited?.id : users.sort((a: IUser, b: IUser) => a.id > b.id ? -1 : 1)[0].id + 1}</p>
                     </div>
                     <button className={styles.closeButton} onClick={() => { setUserBeingEdited(null); setAccessLevelInput(undefined); setIsOpen(false) }}>
                         <img src={xmark} alt="" />

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react"
 import styles from "./homePage.module.scss"
 import { Data } from "../../components/dataComponent/dataComponent"
