@@ -4,10 +4,11 @@ import { Data } from "../../components/dataComponent/dataComponent"
 import { Product } from "../../components/productComponent/productComponent"
 import { useNavigate } from "react-router-dom"
 import { useCurrentUserContext } from "../../hooks/currentUserContext"
+import axios from "axios"
 
 export function HomePage() {
 
-    const {currentUser} = useCurrentUserContext()
+    const { currentUser } = useCurrentUserContext()
 
     const navigate = useNavigate()
 
@@ -18,11 +19,20 @@ export function HomePage() {
     const [showedComponent, setShowedComponent] = useState<number>(1)
 
     useEffect(() => {
+        authTestRequest()
         document.title = "Home"
         if (isAuthenticated != "true") {
             navigate("/")
         }
     }, [])
+
+    async function authTestRequest() {
+        const authResult = await axios.post('https://localhost:7217/api/Auth/login', { username: 'few@main.com', password: 'adm123#' })
+        const token = authResult.data
+
+        const productsResult = await axios.get('https://localhost:7217/api/Products', { headers: { Authorization: 'Bearer ' + token } })
+        console.log(productsResult)
+    }
 
     return (
         <div className={savedTheme == "light" ? styles.light : styles.dark}>
@@ -33,7 +43,7 @@ export function HomePage() {
             </nav>
             {
                 {
-                    1:<Data />,
+                    1: <Data />,
 
                     2: <Product />
                 }[showedComponent]
